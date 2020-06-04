@@ -1,5 +1,7 @@
+import { API } from "../../backend"
+
 export const signup = user => {
-    return fetch(`/signup`, {
+    return fetch(`${API}/signup`, {
         method: "POST",
         headers: {
             Accept: "application/json",
@@ -14,7 +16,7 @@ export const signup = user => {
 }
 
 export const signin = user => {
-    return fetch(`/signin`, {
+    return fetch(`${API}/signin`, {
         method: "POST",
         headers: {
             Accept: "application/json",
@@ -41,7 +43,7 @@ export const signout = (next) => {
         next()
     }
 
-    return fetch(`/signout`, {
+    return fetch(`${API}/signout`, {
         method: "GET"
     })
         .then(response => console.log("Signout success"))

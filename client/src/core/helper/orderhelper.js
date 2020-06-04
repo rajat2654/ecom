@@ -1,5 +1,7 @@
+import { API } from "../../backend"
+
 export const createOrder = (userId, token, orderData) => {
-    return fetch(`/order/create/${userId}`, {
+    return fetch(`${API}/order/create/${userId}`, {
         method: "POST",
         headers: {
             Accept: "application/json",
