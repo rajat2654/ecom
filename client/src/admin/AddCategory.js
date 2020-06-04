@@ -43,6 +43,7 @@ const AddCategory = () => {
                     setName("")
                 }
             })
+            .catch(error => console.log(error))
     }
 
     const successMessage = () => {

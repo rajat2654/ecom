@@ -48,6 +48,7 @@ const AddProduct = () => {
                     setValues({ ...values, categories: data, formData: new FormData() })
                 }
             })
+            .catch(error => console.log(error))
     }
 
     useEffect(() => {

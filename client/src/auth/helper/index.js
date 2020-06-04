@@ -1,33 +1,37 @@
 import { API } from "../../backend"
 
-export const signup = user => {
-    return fetch(`${API}/signup`, {
-        method: "POST",
-        headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(user)
-    })
-        .then(response => {
-            return response.json()
+export const signup = async user => {
+    try {
+        const response = await fetch(`${API}/signup`, {
+            method: "POST",
+            headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(user)
         })
-        .catch(error => console.log(error))
+        return response.json()
+    }
+    catch (error) {
+        return console.log(error)
+    }
 }
 
-export const signin = user => {
-    return fetch(`${API}/signin`, {
-        method: "POST",
-        headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(user)
-    })
-        .then(response => {
-            return response.json()
+export const signin = async user => {
+    try {
+        const response = await fetch(`${API}/signin`, {
+            method: "POST",
+            headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(user)
         })
-        .catch(error => console.log(error))
+        return response.json()
+    }
+    catch (error) {
+        return console.log(error)
+    }
 }
 
 export const authenticate = (data, next) => {
@@ -37,17 +41,21 @@ export const authenticate = (data, next) => {
     }
 }
 
-export const signout = (next) => {
+export const signout = async (next) => {
     if (typeof window !== "undefined") {
         localStorage.removeItem("jwt")
         next()
     }
 
-    return fetch(`${API}/signout`, {
-        method: "GET"
-    })
-        .then(response => console.log("Signout success"))
-        .catch(error => console.log(error))
+    try {
+        const response = await fetch(`${API}/signout`, {
+            method: "GET"
+        })
+        return console.log("Signout success")
+    }
+    catch (error) {
+        return console.log(error)
+    }
 
 }
 

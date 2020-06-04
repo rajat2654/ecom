@@ -59,8 +59,10 @@ const UpdateProduct = ({ match }) => {
                         catName: data.category.name,
                         formData: new FormData(),
                     })
-                    console.log(data.category)
                 }
+            })
+            .catch(error => {
+                setValues({ ...values, error: data.error })
             })
     }
 

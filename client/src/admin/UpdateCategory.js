@@ -42,6 +42,10 @@ const UpdateCategory = ({ match }) => {
                     setName("")
                 }
             })
+            .catch(error => {
+                setError(true)
+                console.log(error)
+            })
     }
 
     const successMessage = () => {
