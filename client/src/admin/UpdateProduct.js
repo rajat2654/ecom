@@ -62,7 +62,7 @@ const UpdateProduct = ({ match }) => {
                 }
             })
             .catch(error => {
-                setValues({ ...values, error: data.error })
+                setValues({ ...values, error })
             })
     }
 
