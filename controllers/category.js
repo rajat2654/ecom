@@ -1,63 +1,58 @@
 const Category = require('../models/category')
 
-const getCategoryById = (req, res, next, id) => {
-    Category.findById(id).exec((error, category) => {
-        if (error) {
-            return res.status(400).send({ error })
-        }
-
-        req.category = category
-        next()
-    })
+const createCategory = async (req, res) => {
+    const category = new Category(req.body)
+    try {
+        await category.save()
+        res.json(category)
+    } catch (error) {
+        res.status(400).json({ error_details: error, error: "Unable to create category" })
+    }
 }
 
-const createCategory = (req, res) => {
-    const category = new Category(req.body)
-    category.save((error, category) => {
-        if (error) {
-            return res.status(400).send({ error })
-        }
-
-        res.send(category)
-    })
+const getCategoryById = async (req, res, next, id) => {
+    try {
+        const category = await Category.findById(id)
+        req.category = category
+        next()
+    } catch (error) {
+        res.status(404).json({ error_details: error, error: "Category not found" })
+    }
 }
 
 const getCategory = (req, res) => {
-    res.send(req.category)
+    res.json(req.category)
 }
 
-const getAllCategories = (req, res) => {
-    Category.find((error, categories) => {
-        if (error) {
-            return res.status(400).send({ error })
-        }
-
-        res.send(categories)
-    })
+const getAllCategories = async (req, res) => {
+    try {
+        const categories = await Category.find()
+        res.json(categories)
+    } catch (error) {
+        res.status(404).json({ error_details: error, error: "Categories not found" })
+    }
 }
 
-const updateCategory = (req, res) => {
+const updateCategory = async (req, res) => {
     const category = req.category
     category.name = req.body.name
 
-    category.save((error, updatedCategory) => {
-        if (error) {
-            return res.status(400).send({ error })
-        }
-
-        res.send(updatedCategory)
-    })
+    try {
+        await category.save()
+        res.json(category)
+    } catch (error) {
+        res.status(400).json({ error_details: error, error: "Unable to update category" })
+    }
 }
 
-const removeCategory = (req, res) => {
+const removeCategory = async (req, res) => {
     const category = req.category
-    category.remove((error, category) => {
-        if (error) {
-            return res.status(400).send({ error })
-        }
-
-        res.send(category)
-    })
+    try {
+        await category.remove()
+        res.json(category)
+    } catch (error) {
+        res.status(400).json({ error_details: error, error: "Unable to delete category" })
+    }
 }
 
 

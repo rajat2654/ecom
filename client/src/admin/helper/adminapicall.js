@@ -1,22 +1,22 @@
 //category calls
 
 //create category
-export const createCategory = (userId, token, categoryName) => {
-    return fetch(`/category/create/${userId}`, {
-        method: "POST",
-        headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`
-        },
-        body: JSON.stringify(categoryName)
-    })
-        .then(response => {
-            return response.json()
+export const createCategory = async (userId, token, categoryName) => {
+    try {
+        const response = await fetch(`/category/create/${userId}`, {
+            method: "POST",
+            headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`
+            },
+            body: JSON.stringify(categoryName)
         })
-        .catch(error => {
-            console.log(error)
-        })
+        return response.json()
+    }
+    catch (error) {
+        console.log(error)
+    }
 }
 
 //get all categories

@@ -27,7 +27,7 @@ router.put('/product/:productId/:userId', isSignedin, isAuthenticated, isAdmin, 
 
 
 
-router.get('/product/categories', getAllUniqueCategories)
+router.get('/products/categories', getAllUniqueCategories)
 
 
 

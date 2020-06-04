@@ -1,7 +1,6 @@
 require('dotenv').config()
 const mongoose = require('mongoose')
 const express = require('express')
-const bodyParser = require('body-parser')
 const cookieParser = require('cookie-parser')
 const cors = require('cors')
 const path = require('path')
@@ -22,7 +21,7 @@ mongoose.connect(process.env.DATABASE, {
     useFindAndModify: false
 }).then(() => {
     console.log("DB CONNECTED")
-}).catch(error => console.log(error))
+}).catch(error => console.log("CAN'T CONNECT TO DATABASE"))
 
 const app = express()
 

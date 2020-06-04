@@ -3,12 +3,12 @@ const formidable = require('formidable')
 const _ = require('lodash')
 const fs = require('fs')
 
-const createProduct = (req, res) => {
+const createProduct = async (req, res) => {
     let form = new formidable.IncomingForm()
     form.keepExtensions = true
-    form.parse(req, (error, fields, file) => {
+    form.parse(req, async (error, fields, file) => {
         if (error) {
-            res.status(400).send({ error })
+            res.status(400).json({ error_details: error, error: "Unable to get form data" })
         }
 
         let product = new Product(fields)
@@ -16,65 +16,61 @@ const createProduct = (req, res) => {
         //handle file
         if (file.photo) {
             if (file.photo.size > 3000000) {
-                return res.status(400).send({ error: "File size too large" })
+                return res.status(400).json({ error: "File size too large" })
             }
 
             product.photo.data = fs.readFileSync(file.photo.path)
             product.photo.contentType = file.photo.type
         }
 
-        product.save((error, product) => {
-            if (error) {
-                return res.status(400).send({ error })
-            }
-
-            res.send(product)
-        })
+        try {
+            await product.save()
+            res.json(product)
+        } catch (error) {
+            res.status(400).json({ error_details: error, error: "Unable to add product" })
+        }
     })
 }
 
-const getProductById = (req, res, next, id) => {
-    Product.findById(id)
-        .populate('category')
-        .exec((error, product) => {
-            if (error) {
-                return res.status(400).send({ error })
-            }
-
-            req.product = product
-            next()
-        })
+const getProductById = async (req, res, next, id) => {
+    try {
+        const product = await Product.findById(id)
+        // product.populate('category')
+        req.product = product
+        next()
+    } catch (error) {
+        res.status(404).json({ error_details: error, error: "Product not found" })
+    }
 }
 
 const getProduct = (req, res) => {
     const product = req.product
-    res.send(product)
+    res.json(product)
 }
 
-const photo = (req, res, next) => {
+const photo = (req, res) => {
     if (req.product.photo.data) {
-        res.set("Content-Type", req.product.photo.contentType)
-        res.send(req.product.photo.data)
+        const photo = req.product.photo
+        res.set("Content-Type", photo.contentType)
+        res.send(photo.data)
     }
-    next()
 }
 
-const removeProduct = (req, res) => {
-    Product.findByIdAndRemove(req.product._id).exec((error, product) => {
-        if (error) {
-            return res.status(400).send({ error })
-        }
-
-        res.send(product)
-    })
+const removeProduct = async (req, res) => {
+    try {
+        const product = await Product.findByIdAndRemove(req.product._id)
+        res.json(product)
+    } catch (error) {
+        res.status(404).json({ error_details: error, error: "Product not found" })
+    }
 }
 
-const updateProduct = (req, res) => {
+const updateProduct = async (req, res) => {
     let form = new formidable.IncomingForm()
     form.keepExtensions = true
-    form.parse(req, (error, fields, file) => {
+    form.parse(req, async (error, fields, file) => {
         if (error) {
-            res.status(400).send({ error })
+            res.status(400).json({ error_details: error, error: "Unable to get form data" })
         }
 
         //update handler
@@ -84,20 +80,19 @@ const updateProduct = (req, res) => {
         //handle file
         if (file.photo) {
             if (file.photo.size > 3000000) {
-                return res.status(400).send({ error: "File size too large" })
+                return res.status(400).json({ error: "File size too large" })
             }
 
             product.photo.data = fs.readFileSync(file.photo.path)
             product.photo.contentType = file.photo.type
         }
 
-        product.save((error, product) => {
-            if (error) {
-                return res.status(400).send({ error })
-            }
-
-            res.send(product)
-        })
+        try {
+            await product.save()
+            res.json(product)
+        } catch (error) {
+            res.status(400).json({ error_details: error, error: "Unable to update product" })
+        }
     })
 }
 
@@ -112,10 +107,10 @@ const getAllProducts = (req, res) => {
         .limit(limit)
         .exec((error, products) => {
             if (error) {
-                return res.status(400).send({ error })
+                return res.status(400).json({ error_details: error, error: "Unable to get products" })
             }
 
-            res.send(products)
+            res.json(products)
         })
 }
 
@@ -131,7 +126,7 @@ const updateStock = (req, res, next) => {
 
     Product.bulkWrite(myOperations, {}, (error, products) => {
         if (error) {
-            return res.status(400).send({ error })
+            return res.status(400).json({ error_details: error, error: "Unable to update stock" })
         }
 
         next()
@@ -141,10 +136,10 @@ const updateStock = (req, res, next) => {
 const getAllUniqueCategories = (req, res) => {
     Product.distinct('category', {}, (error, categories) => {
         if (error) {
-            return res.status(400).send({ error })
+            return res.status(400).json({ error_details: error, error: "Unable to get unique categories" })
         }
 
-        res.send(categories)
+        res.json(categories)
     })
 }
 

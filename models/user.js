@@ -25,8 +25,7 @@ const userSchema = new mongoose.Schema({
     },
     encry_password: {
         type: String,
-        required: true,
-        trim: true
+        required: true
     },
     salt: String,
     role: {

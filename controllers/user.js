@@ -1,38 +1,36 @@
 const User = require('../models/user')
 const { Order } = require('../models/order')
 
-const getUserById = (req, res, next, id) => {
-    User.findById(id).exec((error, user) => {
-        if (error || !user) {
-            return res.status(400).send({ error: "No user found" })
-        }
-
+const getUserById = async (req, res, next, id) => {
+    try {
+        const user = await User.findById(id)
         req.profile = user
         next()
-    })
+    } catch (error) {
+        return res.status(404).json({ error_details, error, error: "User not found" })
+    }
 }
 
 const getUser = (req, res) => {
-    return res.send(req.profile)
+    return res.json(req.profile)
 }
 
-const getAllUsers = (req, res) => {
-    User.find((error, users) => {
-        if (error) {
-            return res.send({ error })
-        }
-
-        res.send(users)
-    })
+const getAllUsers = async (req, res) => {
+    try {
+        const users = await User.find()
+        res.json(users)
+    } catch (error) {
+        return res.status(400).json({ error_details, error, error: "No users found" })
+    }
 }
 
 const updateUser = (req, res) => {
     User.findByIdAndUpdate({ _id: req.profile._id }, { name: "RS" }, { new: true }).exec((error, user) => {
         if (error) {
-            return res.send({ error })
+            return res.json({ error_details: error, error: "Unable to update user details" })
         }
 
-        res.send(user)
+        res.json(user)
     })
 }
 

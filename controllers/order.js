@@ -1,58 +1,51 @@
 const { Order, ProductCart } = require('../models/order')
 
-const getOrderById = (req, res, next, id) => {
-    Order.findById(id)
-        .populate('products.product', 'name price')
-        .exec((error, order) => {
-            if (error) {
-                return res.status(400).send({ error })
-            }
-
-            req.order = order
-            next()
-        })
+const getOrderById = async (req, res, next, id) => {
+    try {
+        const order = await Order.findById(id)
+        await order.populate('products.product', 'name price').execPopulate()
+        req.order = order
+        next()
+    } catch (error) {
+        res.status(404).json({ error_details: error, error: "Order not found" })
+    }
 }
 
-const createOrder = (req, res) => {
+const createOrder = async (req, res) => {
     req.body.order.user = req.profile
     const order = new Order(req.body.order)
-    order.save((error, order) => {
-        if (error) {
-            return res.status(400).send({ error })
-        }
-
-        res.send(order)
-    })
+    try {
+        await order.save()
+        res.json(order)
+    } catch (error) {
+        res.status(400).json({ error_details: error, error: "Unable to create order" })
+    }
 }
 
-const getAllOrders = (req, res) => {
-    Order.find()
-        .populate('user', '_id name')
-        .exec((error, orders) => {
-            if (error) {
-                return res.status(400).send({ error })
-            }
-
-            res.send(orders)
-        })
+const getAllOrders = async (req, res) => {
+    try {
+        const orders = await Order.find()
+        await orders.populate('user', '_id name')
+        res.json(orders)
+    } catch (error) {
+        res.status(400).json({ error_details: error, error: "Orders not found" })
+    }
 }
 
 const getStatus = (req, res) => {
-    res.send(Order.schema.path('status').enumValue)
+    res.json(Order.schema.path('status').enumValue)
 }
 
-const updateStatus = (req, res) => {
-    Order.update(
-        { _id: req.body.orderId },
-        { $set: { status: req.body.status } },
-        (error, order) => {
-            if (error) {
-                return res.status(400).send({ error })
-            }
-
-            res.send(order)
-        }
-    )
+const updateStatus = async (req, res) => {
+    try {
+        const order = await Order.update(
+            { _id: req.body.orderId },
+            { $set: { status: req.body.status } }
+        )
+        res.json(order)
+    } catch (error) {
+        res.status(400).json({ error_details: error, error: "Unable to update order" })
+    }
 }
 
 
