@@ -2,7 +2,7 @@ import { API } from "../../backend"
 
 export const signup = async user => {
     try {
-        const response = await fetch(`${API}/signup`, {
+        const response = await fetch(`/api/signup`, {
             method: "POST",
             headers: {
                 Accept: "application/json",
@@ -19,7 +19,7 @@ export const signup = async user => {
 
 export const signin = async user => {
     try {
-        const response = await fetch(`${API}/signin`, {
+        const response = await fetch(`/api/signin`, {
             method: "POST",
             headers: {
                 Accept: "application/json",
@@ -48,7 +48,7 @@ export const signout = async (next) => {
     }
 
     try {
-        const response = await fetch(`${API}/signout`, {
+        const response = await fetch(`/api/signout`, {
             method: "GET"
         })
         return console.log("Signout success")

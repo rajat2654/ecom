@@ -2,7 +2,7 @@ import { API } from "../../backend"
 
 export const createOrder = async (userId, token, orderData) => {
     try {
-        const response = await fetch(`${API}/order/create/${userId}`, {
+        const response = await fetch(`/api/order/create/${userId}`, {
             method: "POST",
             headers: {
                 Accept: "application/json",

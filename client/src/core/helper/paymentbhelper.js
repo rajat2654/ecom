@@ -2,7 +2,7 @@ import { API } from "../../backend"
 
 export const getmeToken = async (userId, token) => {
     try {
-        const response = await fetch(`${API}/payment/gettoken/${userId}`, {
+        const response = await fetch(`/api/payment/gettoken/${userId}`, {
             method: "GET",
             headers: {
                 Accept: "application/json",
@@ -19,7 +19,7 @@ export const getmeToken = async (userId, token) => {
 
 export const processPayment = async (userId, token, paymentInfo) => {
     try {
-        const response = await fetch(`${API}/payment/braintree/${userId}`, {
+        const response = await fetch(`/api/payment/braintree/${userId}`, {
             method: "POST",
             headers: {
                 Accept: "application/json",
