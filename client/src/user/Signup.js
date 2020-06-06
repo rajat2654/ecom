@@ -54,6 +54,8 @@ const Signup = () => {
         return (
             <div className="row">
                 <div className="col-md-6 offset-sm-3 text-left">
+                    {successMessage()}
+                    {errorMessage()}
                     <form>
                         <div className="form-group">
                             <label className="text-white">Name</label>
@@ -106,15 +108,13 @@ const Signup = () => {
                 <div
                     className="alert alert-danger"
                 >
-                    {JSON.stringify(error)}
+                    {error}
                 </div>)
         }
     }
 
     return (
         <Base title="Signup page" desc="A page for user to signup!">
-            {successMessage()}
-            {errorMessage()}
             {signupForm()}
             {performRedirect()}
         </Base>

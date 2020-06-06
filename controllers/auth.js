@@ -9,14 +9,19 @@ const signup = async (req, res) => {
     if (!errors.isEmpty()) {
         return res.status(422).json({
             error: errors.array()[0].msg,
-            param: errors.array()[0].param,
-            error_details: errors
+            param: errors.array()[0].param
         })
     }
 
     const user = new User(req.body)
 
     try {
+        const old = await User.findOne({ email: user.email })
+        console.log(old)
+        if (old.length) {
+            console.log(old)
+            return res.status(400).json({ error_details: "", error: "Email already taken" })
+        }
         await user.save()
 
         // const token = jwt.sign({ _id: user._id }, process.env.SECRET, { expiresIn: '1 day' })
@@ -56,7 +61,7 @@ const signin = async (req, res) => {
             throw new Error("Invalid password")
         }
 
-        const token = jwt.sign({ _id: user._id }, process.env.SECRET, { expiresIn: '1 day' })
+        const token = jwt.sign({ _id: user._id }, process.env.SECRET, { expiresIn: "2 days" })
 
         res.cookie('token', token).json({ user, token })
 

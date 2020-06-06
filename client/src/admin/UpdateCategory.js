@@ -44,7 +44,6 @@ const UpdateCategory = ({ match }) => {
             })
             .catch(error => {
                 setError(true)
-                console.log(error)
             })
     }
 
@@ -91,12 +90,12 @@ const UpdateCategory = ({ match }) => {
             className="container bg-info p-4"
         >
             <div className="row bg-white rounded">
-                <dib className="col-md-8 offset-md-2">
+                <div className="col-md-8 offset-md-2">
                     {successMessage()}
                     {warningMessage()}
                     {myCategoryForm()}
                     {goBack()}
-                </dib>
+                </div>
             </div>
         </Base>
     )

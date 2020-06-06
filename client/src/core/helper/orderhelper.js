@@ -1,7 +1,10 @@
-import { API } from "../../backend"
+import checkTokenExpirationMiddleware from "../../user/helper/userapicalls"
 
 export const createOrder = async (userId, token, orderData) => {
     try {
+        await checkTokenExpirationMiddleware(() => {
+            throw new Error("Signin again")
+        })
         const response = await fetch(`/api/order/create/${userId}`, {
             method: "POST",
             headers: {

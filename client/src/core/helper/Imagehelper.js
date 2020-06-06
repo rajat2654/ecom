@@ -1,5 +1,4 @@
 import React from 'react'
-import { API } from '../../backend'
 
 const Imagehelper = ({ product }) => {
 
@@ -10,7 +9,6 @@ const Imagehelper = ({ product }) => {
     return (
         <img
             src={imageURL}
-            alt="photo"
             style={{ maxHeight: "100%", maxWidth: "100%" }
             }
             className="mb-3 rounded"

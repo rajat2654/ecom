@@ -1,7 +1,10 @@
-import { API } from "../../backend"
+import checkTokenExpirationMiddleware from "../../user/helper/userapicalls"
 
 export const getmeToken = async (userId, token) => {
     try {
+        await checkTokenExpirationMiddleware(() => {
+            throw new Error("Signin again")
+        })
         const response = await fetch(`/api/payment/gettoken/${userId}`, {
             method: "GET",
             headers: {
@@ -19,6 +22,9 @@ export const getmeToken = async (userId, token) => {
 
 export const processPayment = async (userId, token, paymentInfo) => {
     try {
+        await checkTokenExpirationMiddleware(() => {
+            throw new Error("Signin again")
+        })
         const response = await fetch(`/api/payment/braintree/${userId}`, {
             method: "POST",
             headers: {

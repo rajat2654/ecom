@@ -1,9 +1,13 @@
-import { API } from '../../backend'
 //category calls
+
+import checkTokenExpirationMiddleware from "../../user/helper/userapicalls"
 
 //create category
 export const createCategory = async (userId, token, categoryName) => {
     try {
+        await checkTokenExpirationMiddleware(() => {
+            throw new Error("Signin again")
+        })
         const response = await fetch(`/api/category/create/${userId}`, {
             method: "POST",
             headers: {
@@ -36,6 +40,9 @@ export const getAllCategories = async () => {
 //update category
 export const updateCategory = async (categoryId, userId, token, category) => {
     try {
+        await checkTokenExpirationMiddleware(() => {
+            throw new Error("Signin again")
+        })
         const response = await fetch(`/api/category/${categoryId}/${userId}`, {
             method: "PUT",
             headers: {
@@ -55,6 +62,9 @@ export const updateCategory = async (categoryId, userId, token, category) => {
 //delete category
 export const deleteCategory = async (categoryId, userId, token) => {
     try {
+        await checkTokenExpirationMiddleware(() => {
+            throw new Error("Signin again")
+        })
         const response = await fetch(`/api/category/${categoryId}/${userId}`, {
             method: "DELETE",
             headers: {
@@ -73,6 +83,9 @@ export const deleteCategory = async (categoryId, userId, token) => {
 //create product
 export const createProduct = async (userId, token, product) => {
     try {
+        await checkTokenExpirationMiddleware(() => {
+            throw new Error("Signin again")
+        })
         const response = await fetch(`/api/product/create/${userId}`, {
             method: "POST",
             headers: {
@@ -104,6 +117,9 @@ export const getProducts = async () => {
 //delete product
 export const deleteProduct = async (productId, userId, token) => {
     try {
+        await checkTokenExpirationMiddleware(() => {
+            throw new Error("Signin again")
+        })
         const response = await fetch(`/api/product/${productId}/${userId}`, {
             method: "DELETE",
             headers: {
@@ -134,6 +150,9 @@ export const getProduct = async (productId) => {
 //update a product
 export const updateProduct = async (productId, userId, token, product) => {
     try {
+        await checkTokenExpirationMiddleware(() => {
+            throw new Error("Signin again")
+        })
         const response = await fetch(`/api/product/${productId}/${userId}`, {
             method: "PUT",
             headers: {

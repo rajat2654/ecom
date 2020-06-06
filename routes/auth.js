@@ -7,12 +7,13 @@ const router = express.Router()
 router.get('/signout', signout)
 
 router.post('/signup', [
-    check('email').isEmail().withMessage("Email is not valid")
+    check('email').isEmail().withMessage("Email is not valid"),
+    check('password').blacklist(" ").isLength({ min: 6 }).withMessage("Weak password")
 ], signup)
 
 router.post('/signin', [
     check('email').isEmail().withMessage("Email is not valid"),
-    check('password').isLength({ min: 3 }).withMessage("Password is required")
+    check('password').isLength({ min: 6 }).withMessage("Invalid password")
 ], signin)
 
 router.get('/me', isSignedin, (req, res) => {

@@ -25,11 +25,20 @@ export default function Home() {
         preload()
     }, [])
 
+    const noProducts = () => {
+        if (error) {
+            return (
+                <div>No products available</div>
+            )
+        }
+    }
+
     return (
         <Base title="Home">
             <div className="row text-center">
                 <h1 className="text-white">All products</h1>
                 <div className="row">
+                    {noProducts()}
                     {products.map((product, index) => {
                         return (
                             <div key={index} className="col-4 mb-4">
