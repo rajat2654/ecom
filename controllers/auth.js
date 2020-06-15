@@ -17,9 +17,7 @@ const signup = async (req, res) => {
 
     try {
         const old = await User.findOne({ email: user.email })
-        console.log(old)
-        if (old.length) {
-            console.log(old)
+        if (old) {
             return res.status(400).json({ error_details: "", error: "Email already taken" })
         }
         await user.save()
@@ -28,7 +26,8 @@ const signup = async (req, res) => {
         // res.cookie('token', token).status(201).json({ user, token, msg: "User data was saved" })
 
         res.status(201).json({
-            name: user.name,
+            firstName: user.firstName,
+            lastName: user.lastName,
             email: user.email,
             id: user._id
         })

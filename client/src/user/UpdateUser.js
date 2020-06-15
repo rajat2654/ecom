@@ -1,6 +1,6 @@
 import React from 'react'
 import Base from '../core/Base'
-import { Link, Redirect } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { isAuthenticated, updateUser } from '../auth/helper'
 import { useState } from 'react'
 
@@ -15,10 +15,9 @@ const UpdateUser = () => {
     })
 
     const {
-        name,
+        firstName,
         lastName,
         email,
-        userinfo,
         formData,
         error,
         success
@@ -39,10 +38,9 @@ const UpdateUser = () => {
                 } else {
                     setUserdata({
                         ...userdata,
-                        name: "",
+                        firstName: "",
                         lastName: "",
                         email: "",
-                        userinfo: "",
                         formData: new FormData(),
                         success: true
                     })
@@ -83,11 +81,11 @@ const UpdateUser = () => {
         <form >
             <div className="form-group">
                 <input
-                    onChange={handleChange("name")}
+                    onChange={handleChange("firstName")}
                     name="photo"
                     className="form-control"
-                    placeholder="Name"
-                    value={name}
+                    placeholder="First name"
+                    value={firstName}
                     required
                 />
             </div>
@@ -108,15 +106,6 @@ const UpdateUser = () => {
                     placeholder="Email"
                     value={email}
                     required
-                />
-            </div>
-            <div className="form-group">
-                <input
-                    onChange={handleChange("userinfo")}
-                    name="userinfo"
-                    className="form-control"
-                    placeholder="User info"
-                    value={userinfo}
                 />
             </div>
 

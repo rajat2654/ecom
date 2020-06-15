@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom'
 const AdminDashBoard = () => {
 
     const {
-        user: { name, email }
+        user: { firstName, lastName, email }
     } = isAuthenticated()
 
     const adminLeftSide = () => {
@@ -56,7 +56,10 @@ const AdminDashBoard = () => {
                 <h4 className="card-header bg-dark text-white">Admin info</h4>
                 <ul className="list-group">
                     <li className="list-group-item">
-                        <span className="badge badge-success mr-2">Name:</span>{name}
+                        <span className="badge badge-success mr-2">First Name:</span>{firstName}
+                    </li>
+                    <li className="list-group-item">
+                        <span className="badge badge-success mr-2">Last Name:</span>{lastName}
                     </li>
                     <li className="list-group-item">
                         <span className="badge badge-success mr-2">Email:</span>{email}

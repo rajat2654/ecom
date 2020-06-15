@@ -4,7 +4,7 @@ import { isAuthenticated } from '../auth/helper'
 import { Link } from 'react-router-dom'
 
 const Profile = () => {
-    const { user: { name, lastName, email, userinfo } } = isAuthenticated()
+    const { user: { firstName, lastName, email } } = isAuthenticated()
 
     const userDetails = () => {
         return (
@@ -12,16 +12,13 @@ const Profile = () => {
                 <h4 className="card-header bg-dark text-white">User info</h4>
                 <ul className="list-group">
                     <li className="list-group-item">
-                        <span className="badge badge-success mr-2">Name:</span>{name}
+                        <span className="badge badge-success mr-2">First name:</span>{firstName}
                     </li>
                     <li className="list-group-item">
                         <span className="badge badge-success mr-2">Last name:</span>{lastName}
                     </li>
                     <li className="list-group-item">
                         <span className="badge badge-success mr-2">Email:</span>{email}
-                    </li>
-                    <li className="list-group-item">
-                        <span className="badge badge-success mr-2">User info:</span>{userinfo}
                     </li>
                 </ul>
             </div>

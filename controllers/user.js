@@ -25,7 +25,7 @@ const getAllUsers = async (req, res) => {
 }
 
 const updateUser = (req, res) => {
-    User.findByIdAndUpdate({ _id: req.profile._id }, { name: "RS" }, { new: true }).exec((error, user) => {
+    User.findByIdAndUpdate({ _id: req.profile._id }, req.body, { new: true }).exec((error, user) => {
         if (error) {
             return res.json({ error_details: error, error: "Unable to update user details" })
         }

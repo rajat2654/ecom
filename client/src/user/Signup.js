@@ -6,14 +6,15 @@ import { signup, isAuthenticated } from '../auth/helper/index'
 
 const Signup = () => {
     const [values, setValues] = useState({
-        name: "",
+        firstName: "",
+        lastName: "",
         email: "",
         password: "",
         error: "",
         success: false
     })
 
-    const { name, email, password, error, success } = values
+    const { firstName, lastName, email, password, error, success } = values
 
     const handleChange = name => event => {
         setValues({ ...values, error: false, [name]: event.target.value })
@@ -28,7 +29,7 @@ const Signup = () => {
     const onSubmit = event => {
         event.preventDefault()
         setValues({ ...values, error: false })
-        signup({ name, email, password })
+        signup({ firstName, lastName, email, password })
             .then(data => {
                 if (data.error) {
                     setValues({ ...values, error: data.error, success: false })
@@ -36,7 +37,8 @@ const Signup = () => {
                 else {
                     setValues({
                         ...values,
-                        name: "",
+                        firstName: "",
+                        lastName: "",
                         email: "",
                         password: "",
                         error: "",
@@ -58,12 +60,21 @@ const Signup = () => {
                     {errorMessage()}
                     <form>
                         <div className="form-group">
-                            <label className="text-white">Name</label>
+                            <label className="text-white">First name</label>
                             <input
                                 className="form-control"
-                                onChange={handleChange("name")}
+                                onChange={handleChange("firstName")}
                                 type="text"
-                                value={name}
+                                value={firstName}
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label className="text-white">Last name</label>
+                            <input
+                                className="form-control"
+                                onChange={handleChange("lastName")}
+                                type="text"
+                                value={lastName}
                             />
                         </div>
                         <div className="form-group">
