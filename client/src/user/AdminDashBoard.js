@@ -16,6 +16,11 @@ const AdminDashBoard = () => {
                 <h4 className="card-header bg-dark text-white">Admin navigation</h4>
                 <ul className="list-group">
                     <li className="list-group-item">
+                        <Link to='/myprofile' className="nav-link text-success">
+                            Profile
+                        </Link>
+                    </li>
+                    <li className="list-group-item">
                         <Link to='/admin/create/category' className="nav-link text-success">
                             Create Categories
                         </Link>
@@ -74,10 +79,6 @@ const AdminDashBoard = () => {
                 <div className="col-3">{adminLeftSide()}</div>
                 <div className="col-9">{adminRightSide()}</div>
             </div>
-
-
-
-
         </Base>
     )
 }

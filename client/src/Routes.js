@@ -16,6 +16,7 @@ import UpdateProduct from './admin/UpdateProduct'
 import UpdateCategory from './admin/UpdateCategory'
 import Cart from './core/Cart'
 import Profile from './user/Profile'
+import UpdateUser from './user/UpdateUser'
 
 export default function Routes() {
     return (
@@ -26,7 +27,8 @@ export default function Routes() {
                 <Route path='/signin' exact component={Signin} />
                 <Route path='/cart' exact component={Cart} />
                 <PrivateRoute path='/user/dashboard' exact component={UserDashBoard} />
-                <PrivateRoute path='/user/profile' exact component={Profile} />
+                <PrivateRoute path='/myprofile' exact component={Profile} />
+                <PrivateRoute path='/myprofile/update' exact component={UpdateUser} />
                 <AdminRoute path='/admin/dashboard' exact component={AdminDashBoard} />
                 <AdminRoute path='/admin/create/category' exact component={AddCategory} />
                 <AdminRoute path='/admin/categories' exact component={ManageCategories} />

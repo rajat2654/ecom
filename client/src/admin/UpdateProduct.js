@@ -161,7 +161,7 @@ const UpdateProduct = ({ match }) => {
             <div className="form-group">
                 <input
                     onChange={handleChange("name")}
-                    name="photo"
+                    name="name"
                     className="form-control"
                     placeholder="Name"
                     value={name}
@@ -170,7 +170,7 @@ const UpdateProduct = ({ match }) => {
             <div className="form-group">
                 <textarea
                     onChange={handleChange("description")}
-                    name="photo"
+                    name="description"
                     className="form-control"
                     placeholder="Description"
                     value={description}

@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 const crypto = require('crypto')
 const uuidv1 = require('uuid/v1')
+const bcrypt = require('bcryptjs')
 
 const userSchema = new mongoose.Schema({
     name: {
@@ -62,6 +63,7 @@ userSchema.methods = {
             return crypto.createHmac('sha256', this.salt)
                 .update(plain_pass)
                 .digest('hex')
+            // return bcrypt.hash(plain_pass, 8)
         } catch (error) {
             return ""
         }

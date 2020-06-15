@@ -7,7 +7,7 @@ const UserDashBoard = () => {
         <Base title="UserDashBoard page">
             <h1>This is UserDashBoard page</h1>
             <h3>
-                <Link to="/user/profile">Profile</Link>
+                <Link to="/myprofile">Profile</Link>
             </h3>
         </Base>
     )

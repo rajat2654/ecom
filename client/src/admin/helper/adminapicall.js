@@ -1,6 +1,6 @@
 //category calls
 
-import checkTokenExpirationMiddleware from "../../user/helper/userapicalls"
+import checkTokenExpirationMiddleware from "../../user/helper/checkexp"
 
 //create category
 export const createCategory = async (userId, token, categoryName) => {

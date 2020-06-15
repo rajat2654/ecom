@@ -1,3 +1,5 @@
+import checkTokenExpirationMiddleware from "../../user/helper/checkexp"
+
 export const signup = async user => {
     try {
         const response = await fetch(`/api/signup`, {
@@ -66,4 +68,23 @@ export const isAuthenticated = () => {
         return JSON.parse(localStorage.getItem("jwt"))
     }
     return false
+}
+
+export const updateUser = async (userId, user, token) => {
+    try {
+        await checkTokenExpirationMiddleware(() => {
+            throw new Error("Signin again")
+        })
+        const response = await fetch(`/api/user/${userId}`, {
+            method: "PUT",
+            headers: {
+                Accept: "application form",
+                Authorization: `Bearer ${token}`
+            },
+            body: user
+        })
+        return response.json()
+    } catch (error) {
+        return console.log(error)
+    }
 }

@@ -61,7 +61,7 @@ const signin = async (req, res) => {
             throw new Error("Invalid password")
         }
 
-        const token = jwt.sign({ _id: user._id }, process.env.SECRET, { expiresIn: "2 days" })
+        const token = jwt.sign({ _id: user._id }, process.env.SECRET, { expiresIn: "1d" })
 
         res.cookie('token', token).json({ user, token })
 
