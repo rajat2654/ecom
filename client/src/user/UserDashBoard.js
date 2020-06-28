@@ -4,10 +4,11 @@ import { Link } from 'react-router-dom'
 
 const UserDashBoard = () => {
     return (
-        <Base title="UserDashBoard page">
-            <h1>This is UserDashBoard page</h1>
+        <Base title="User Dashboard">
+            <h1>This is User Dashboard page</h1>
             <h3>
-                <Link to="/myprofile">Profile</Link>
+                <Link to="/myprofile">My profile</Link><br />
+                <Link to="/myorders">My orders</Link>
             </h3>
         </Base>
     )

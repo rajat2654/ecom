@@ -25,6 +25,14 @@ const Profile = () => {
         )
     }
 
+    const goBack = () => {
+        return (
+            <div className="mt-5">
+                <Link className="btn btn-sm btn-info mb-3" to="/user/dashboard">Back</Link>
+            </div>
+        )
+    }
+
     return (
         <Base
             title="Profile page"
@@ -37,8 +45,8 @@ const Profile = () => {
                     <div className="mt-5">
                         <Link className="btn btn-sm btn-success mb-3" to="/myprofile/update">Update details</Link>
                     </div>
+                    {goBack()}
                 </div>
-
             </div>
         </Base>
     )
