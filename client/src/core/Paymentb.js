@@ -114,13 +114,10 @@ const Paymentb = ({ products, setReload = f => f, reload = undefined }) => {
                                     emptyCart(() => {
                                         console.log("Cart emptied")
                                     })
+                                    setReload(!reload)
                                 }
                             })
                             .catch(error => console.log("Order can not be placed", error))
-
-
-
-                        setReload(!reload)
 
                     })
                     .catch(error => {
