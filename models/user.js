@@ -24,7 +24,6 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    salt: String,
     role: {
         type: Number,
         default: 0
@@ -58,8 +57,7 @@ userSchema.methods.toJSON = function () {
     const user = this
     const userObject = user.toObject()
 
-    delete userObject.encry_password
-    delete userObject.salt
+    delete userObject.password
     return userObject
 }
 

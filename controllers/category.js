@@ -6,7 +6,7 @@ const createCategory = async (req, res) => {
         await category.save()
         res.json(category)
     } catch (error) {
-        res.status(400).json({ error_details: error, error: "Unable to create category" })
+        res.status(400).json({ error: "Unable to create category" })
     }
 }
 
@@ -16,7 +16,7 @@ const getCategoryById = async (req, res, next, id) => {
         req.category = category
         next()
     } catch (error) {
-        res.status(404).json({ error_details: error, error: "Category not found" })
+        res.status(404).json({ error: "Category not found" })
     }
 }
 
@@ -29,7 +29,7 @@ const getAllCategories = async (req, res) => {
         const categories = await Category.find()
         res.json(categories)
     } catch (error) {
-        res.status(404).json({ error_details: error, error: "Categories not found" })
+        res.status(404).json({ error: "Categories not found" })
     }
 }
 
@@ -41,7 +41,7 @@ const updateCategory = async (req, res) => {
         await category.save()
         res.json(category)
     } catch (error) {
-        res.status(400).json({ error_details: error, error: "Unable to update category" })
+        res.status(400).json({ error: "Unable to update category" })
     }
 }
 
@@ -51,7 +51,7 @@ const removeCategory = async (req, res) => {
         await category.remove()
         res.json(category)
     } catch (error) {
-        res.status(400).json({ error_details: error, error: "Unable to delete category" })
+        res.status(400).json({ error: "Unable to delete category" })
     }
 }
 

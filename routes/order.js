@@ -6,8 +6,8 @@ const { updateStock } = require('../controllers/product')
 const { getOrderById, createOrder, getAllOrders, getStatus, updateStatus } = require('../controllers/order')
 
 //params
-router.param('/userId', getUserById)
-router.param('/orderId', getOrderById)
+router.param('userId', getUserById)
+router.param('orderId', getOrderById)
 
 //actual routes
 

@@ -7,7 +7,6 @@ import { isAuthenticated } from '../auth/helper'
 import DropIn from 'braintree-web-drop-in-react'
 
 const Paymentb = ({ products, setReload = f => f, reload = undefined }) => {
-
     const [info, setInfo] = useState({
         loading: false,
         success: false,
@@ -16,20 +15,31 @@ const Paymentb = ({ products, setReload = f => f, reload = undefined }) => {
         instance: {}
     })
 
+    const [order, setOrder] = useState({
+        status: '',
+        transaction_id: '',
+        amount: '',
+    })
+
     const userId = isAuthenticated() && isAuthenticated().user._id
     const token = isAuthenticated() && isAuthenticated().token
 
+    const getAmount = () => {
+        let amount = 0
+        products.map(p => {
+            amount = amount + p.price
+        })
+        return amount
+    }
+
     const getToken = (userId, token) => {
         if (isAuthenticated()) {
-            console.log(products.length, "GETTING TOKEN")
             getmeToken(userId, token)
-                .then(info => {
-                    console.log("INFO", info)
-
-                    if (info.error) {
-                        setInfo({ ...info, error: info.error })
+                .then(data => {
+                    if (data.error) {
+                        setInfo({ ...info, error: data.error })
                     } else {
-                        const clientToken = info.clientToken
+                        const clientToken = data.clientToken
                         setInfo({ clientToken })
                     }
                 })
@@ -91,11 +101,24 @@ const Paymentb = ({ products, setReload = f => f, reload = undefined }) => {
                             transaction_id: response.transaction.id,
                             amount: response.transaction.amount
                         }
-                        createOrder(userId, token, orderData)
 
-                        emptyCart(() => {
-                            console.log("Cart emptied")
-                        })
+                        console.log(orderData)
+
+                        createOrder(userId, token, orderData)
+                            .then(data => {
+                                if (data.error) {
+                                    console.log(data.error)
+                                }
+                                else {
+                                    setOrder({ ...order, status: data.status, transaction_id: data.transaction_id, amount: data.amount })
+                                    emptyCart(() => {
+                                        console.log("Cart emptied")
+                                    })
+                                }
+                            })
+                            .catch(error => console.log("Order can not be placed", error))
+
+
 
                         setReload(!reload)
 
@@ -107,12 +130,17 @@ const Paymentb = ({ products, setReload = f => f, reload = undefined }) => {
             })
     }
 
-    const getAmount = () => {
-        let amount = 0
-        products.map(p => {
-            amount = amount + p.price
-        })
-        return amount
+    const orderDetails = () => {
+        if (order.status) {
+            return (
+                <div>
+                    <div className="text-bold">Order details:</div>
+                    <div className="text">Status: {order.status}</div>
+                    <div className="text">Transaction ID: {order.transaction_id}</div>
+                    <div className="text">Total amount: {order.amount}</div>
+                </div>
+            )
+        }
     }
 
     return (
@@ -121,6 +149,7 @@ const Paymentb = ({ products, setReload = f => f, reload = undefined }) => {
             {showbtdropIn()}
             {signInMsg()}
             {addItemsMsg()}
+            {orderDetails()}
         </div>
     )
 }

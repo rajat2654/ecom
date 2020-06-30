@@ -8,7 +8,7 @@ const createProduct = async (req, res) => {
     form.keepExtensions = true
     form.parse(req, async (error, fields, file) => {
         if (error) {
-            res.status(400).json({ error_details: error, error: "Unable to get form data" })
+            res.status(400).json({ error: "Unable to get form data" })
         }
 
         let product = new Product(fields)
@@ -27,7 +27,7 @@ const createProduct = async (req, res) => {
             await product.save()
             res.json(product)
         } catch (error) {
-            res.status(400).json({ error_details: error, error: "Unable to add product" })
+            res.status(400).json({ error: "Unable to add product" })
         }
     })
 }
@@ -39,7 +39,7 @@ const getProductById = async (req, res, next, id) => {
         req.product = product
         next()
     } catch (error) {
-        res.status(404).json({ error_details: error, error: "Product not found" })
+        res.status(404).json({ error: "Product not found" })
     }
 }
 
@@ -61,7 +61,7 @@ const removeProduct = async (req, res) => {
         const product = await Product.findByIdAndRemove(req.product._id)
         res.json(product)
     } catch (error) {
-        res.status(404).json({ error_details: error, error: "Product not found" })
+        res.status(404).json({ error: "Product not found" })
     }
 }
 
@@ -70,7 +70,7 @@ const updateProduct = async (req, res) => {
     form.keepExtensions = true
     form.parse(req, async (error, fields, file) => {
         if (error) {
-            res.status(400).json({ error_details: error, error: "Unable to get form data" })
+            res.status(400).json({ error: "Unable to get form data" })
         }
 
         //update handler
@@ -91,7 +91,7 @@ const updateProduct = async (req, res) => {
             await product.save()
             res.json(product)
         } catch (error) {
-            res.status(400).json({ error_details: error, error: "Unable to update product" })
+            res.status(400).json({ error: "Unable to update product" })
         }
     })
 }
@@ -107,7 +107,7 @@ const getAllProducts = (req, res) => {
         .limit(limit)
         .exec((error, products) => {
             if (error) {
-                return res.status(400).json({ error_details: error, error: "Unable to get products" })
+                return res.status(400).json({ error: "Unable to get products" })
             }
 
             res.json(products)
@@ -126,7 +126,7 @@ const updateStock = (req, res, next) => {
 
     Product.bulkWrite(myOperations, {}, (error, products) => {
         if (error) {
-            return res.status(400).json({ error_details: error, error: "Unable to update stock" })
+            return res.status(400).json({ error: "Unable to update stock" })
         }
 
         next()
@@ -136,7 +136,7 @@ const updateStock = (req, res, next) => {
 const getAllUniqueCategories = (req, res) => {
     Product.distinct('category', {}, (error, categories) => {
         if (error) {
-            return res.status(400).json({ error_details: error, error: "Unable to get unique categories" })
+            return res.status(400).json({ error: "Unable to get unique categories" })
         }
 
         res.json(categories)

@@ -10,7 +10,7 @@ const gateway = braintree.connect({
 const getToken = (req, res) => {
     gateway.clientToken.generate({}, function (error, response) {
         if (error) {
-            return res.status(500).json({ error_details: error, error: "Client token cannot be generated" })
+            return res.status(500).json({ error: "Client token cannot be generated" })
         }
         res.json(response)
     });
@@ -28,7 +28,7 @@ const processPayment = (req, res) => {
         }
     }, function (error, result) {
         if (error) {
-            return res.status(500).json({ error_details: error, error: "Payment failed" })
+            return res.status(500).json({ error: "Payment failed" })
         }
         res.json(result)
     });

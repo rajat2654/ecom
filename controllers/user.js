@@ -7,7 +7,7 @@ const getUserById = async (req, res, next, id) => {
         req.profile = user
         next()
     } catch (error) {
-        return res.status(404).json({ error_details, error, error: "User not found" })
+        return res.status(404).json({ error: "User not found" })
     }
 }
 
@@ -20,14 +20,14 @@ const getAllUsers = async (req, res) => {
         const users = await User.find()
         res.json(users)
     } catch (error) {
-        return res.status(400).json({ error_details, error, error: "No users found" })
+        return res.status(400).json({ error, error: "No users found" })
     }
 }
 
 const updateUser = (req, res) => {
     User.findByIdAndUpdate({ _id: req.profile._id }, req.body, { new: true }).exec((error, user) => {
         if (error) {
-            return res.json({ error_details: error, error: "Unable to update user details" })
+            return res.json({ error: "Unable to update user details" })
         }
 
         res.json(user)
@@ -47,7 +47,7 @@ const userPurchaseList = (req, res) => {
 const pushOrderInPurchaseList = (req, res, next) => {
     let purchases = []
     req.body.order.products.forEach((product) => {
-        const { } = product
+        const { _id, name, description, category, quantity } = product
         purchases.push({
             _id,
             name,

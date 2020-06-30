@@ -8,6 +8,7 @@ const Card = ({
     addToCart = true,
     removeFromCart = false,
     reload = undefined,
+    quantity = 0,
     setReload = f => f
 }) => {
 
@@ -56,6 +57,16 @@ const Card = ({
         )
     }
 
+    const showQty = (removeFromCart) => {
+        if (removeFromCart) {
+            return (
+                <p className="lead bg-success font-weight-normal text-wrap">
+                    Quantity: {quantity}
+                </p>
+            )
+        }
+    }
+
     return (
         <div className="card text-white bg-dark border border-info ">
             <div className="card-header lead">{cardTitle}</div>
@@ -67,6 +78,7 @@ const Card = ({
                     {cardDescription}
                 </p>
                 <p className="btn btn-success rounded  btn-sm px-4">Rs {cardPrice}</p>
+                {showQty(removeFromCart)}
                 <div className="row">
                     <div className="col-12">
                         {getRedirect(redirect)}

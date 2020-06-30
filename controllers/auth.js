@@ -18,7 +18,7 @@ const signup = async (req, res) => {
     try {
         const old = await User.findOne({ email: user.email })
         if (old) {
-            return res.status(400).json({ error_details: "", error: "Email already taken" })
+            return res.status(400).json({ error: "Email already taken" })
         }
         await user.save()
 
@@ -32,7 +32,7 @@ const signup = async (req, res) => {
             id: user._id
         })
     } catch (error) {
-        res.status(400).json({ error_details: error, error: "Unable to signup" })
+        res.status(400).json({ error: "Unable to signup" })
     }
 }
 
@@ -42,8 +42,7 @@ const signin = async (req, res) => {
     if (!errors.isEmpty()) {
         return res.status(422).json({
             error: errors.array()[0].msg,
-            param: errors.array()[0].param,
-            error_details: errors
+            param: errors.array()[0].param
         })
     }
 
@@ -65,7 +64,7 @@ const signin = async (req, res) => {
         res.cookie('token', token).json({ user, token })
 
     } catch (error) {
-        res.status(400).json({ error_details: error, error: "Bad credentials" })
+        res.status(400).json({ error: "Bad credentials" })
     }
 }
 
@@ -93,7 +92,7 @@ const isAuthenticated = (req, res, next) => {
 
 const isAdmin = (req, res, next) => {
     if (req.profile.role === 0) {
-        return res.status(403).json({ error: "You are not am admin, access denied" })
+        return res.status(403).json({ error: "You are not an admin, access denied" })
     }
     next()
 }

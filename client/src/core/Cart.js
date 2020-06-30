@@ -16,14 +16,14 @@ const Cart = () => {
     const loadAllProducts = () => {
         return (
             <div>
-                <h2>This section is to load products</h2>
-                <h2>{products.length} items in cart</h2>
+                <h2>Your cart</h2>
                 {products.map((product, index) => (
                     <Card
                         key={index}
                         product={product}
                         addToCart={false}
                         removeFromCart={true}
+                        quantity={product.count}
                         setReload={setReload}
                         reload={reload}
                     />

@@ -7,7 +7,7 @@ const getOrderById = async (req, res, next, id) => {
         req.order = order
         next()
     } catch (error) {
-        res.status(404).json({ error_details: error, error: "Order not found" })
+        res.status(404).json({ error: "Order not found" })
     }
 }
 
@@ -18,7 +18,7 @@ const createOrder = async (req, res) => {
         await order.save()
         res.json(order)
     } catch (error) {
-        res.status(400).json({ error_details: error, error: "Unable to create order" })
+        res.status(400).json({ error: "Unable to create order" })
     }
 }
 
@@ -28,7 +28,7 @@ const getAllOrders = async (req, res) => {
         await orders.populate('user', '_id name')
         res.json(orders)
     } catch (error) {
-        res.status(400).json({ error_details: error, error: "Orders not found" })
+        res.status(400).json({ error: "Orders not found" })
     }
 }
 
@@ -44,7 +44,7 @@ const updateStatus = async (req, res) => {
         )
         res.json(order)
     } catch (error) {
-        res.status(400).json({ error_details: error, error: "Unable to update order" })
+        res.status(400).json({ error: "Unable to update order" })
     }
 }
 
