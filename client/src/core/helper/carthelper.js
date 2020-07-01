@@ -14,10 +14,21 @@ export const addItemToCart = (item, next) => {
         if (localStorage.getItem("cart")) {
             cart = JSON.parse(localStorage.getItem("cart"))
         }
-        cart.push({
-            ...item,
-            count: 1
+        let x = 0
+        cart.forEach((prod) => {
+            if (prod._id === item._id) {
+                x = 1
+                prod.count++
+            }
         })
+
+        if (x === 0) {
+            cart.push({
+                ...item,
+                count: 1
+            })
+        }
+
         localStorage.setItem("cart", JSON.stringify(cart))
         next()
     }
