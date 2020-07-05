@@ -78,10 +78,11 @@ export const updateUser = async (userId, user, token) => {
         const response = await fetch(`/api/user/${userId}`, {
             method: "PUT",
             headers: {
-                Accept: "application form",
+                Accept: "application/json",
+                "Content-Type": "application/json",
                 Authorization: `Bearer ${token}`
             },
-            body: user
+            body: JSON.stringify(user)
         })
         return response.json()
     } catch (error) {

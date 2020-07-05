@@ -1,7 +1,7 @@
 import React from 'react'
 import Base from '../core/Base'
 import { Link } from 'react-router-dom'
-import { isAuthenticated, updateUser } from '../auth/helper'
+import { isAuthenticated, updateUser, authenticate } from '../auth/helper'
 import { useState } from 'react'
 
 const UpdateUser = () => {
@@ -10,39 +10,38 @@ const UpdateUser = () => {
     const [userdata, setUserdata] = useState({
         ...user,
         error: "",
-        success: "",
-        formData: new FormData()
+        success: ""
     })
 
     const {
         firstName,
         lastName,
         email,
-        formData,
         error,
         success
     } = userdata
 
     const handleChange = name => event => {
         const value = event.target.value
-        formData.set(name, value)
         setUserdata({ ...userdata, [name]: value })
     }
 
     const onSubmit = (event) => {
         event.preventDefault()
-        updateUser(user._id, formData, token)
+
+        updateUser(user._id, { firstName, lastName, email }, token)
             .then(data => {
                 if (data.error) {
-                    setUserdata({ ...userdata, error })
+                    setUserdata({ ...userdata, error: data.error })
                 } else {
-                    setUserdata({
-                        ...userdata,
-                        firstName: "",
-                        lastName: "",
-                        email: "",
-                        formData: new FormData(),
-                        success: true
+                    authenticate(data, () => {
+                        setUserdata({
+                            ...userdata,
+                            firstName: "",
+                            lastName: "",
+                            email: "",
+                            success: true
+                        })
                     })
                 }
             })

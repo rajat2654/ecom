@@ -25,12 +25,13 @@ const getAllUsers = async (req, res) => {
 }
 
 const updateUser = (req, res) => {
-    User.findByIdAndUpdate({ _id: req.profile._id }, req.body, { new: true }).exec((error, user) => {
+    const token = req.headers.authorization.replace('Bearer ', '')
+    User.findByIdAndUpdate(req.profile._id, req.body, { new: true }).exec((error, user) => {
         if (error) {
             return res.json({ error: "Unable to update user details" })
         }
 
-        res.json(user)
+        res.cookie('token', token).json({ user, token })
     })
 }
 
