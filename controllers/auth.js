@@ -55,7 +55,8 @@ const signin = async (req, res) => {
             throw new Error("User not found")
         }
 
-        if (!user.authenticate(password)) {
+        const result = await user.authenticate(password)
+        if (!result) {
             throw new Error("Invalid password")
         }
 

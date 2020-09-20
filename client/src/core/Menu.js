@@ -87,7 +87,7 @@ const Menu = ({ history }) => (
                         className="nav-link text-warning"
                         onClick={() => {
                             signout(() => {
-                                history.push("/")
+                                history.push("/signin")
                             })
                         }}
                     >
